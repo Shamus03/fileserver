@@ -1,0 +1,28 @@
+<table>
+    <tbody>
+        {{if ne .Dir "/" -}}
+        <tr>
+            <td>
+                <a href="..">..</a>
+            </td>
+        </tr>
+        {{end -}}
+        <tr>
+            <td>
+                <a href="{{.Dir}}?zip">Download Zip</a>
+            </td>
+        </tr>
+        {{range .Files -}}
+        <tr>
+            <td>
+                <a href="{{.Path}}">{{.Name}}</a>
+            </td>
+            <td>
+                {{- if not .IsDir -}}
+                {{.Size}}
+                {{- end -}}
+            </td>
+        </tr>
+        {{end -}}
+    </tbody>
+</table>
