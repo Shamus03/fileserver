@@ -84,6 +84,10 @@ func handleListFiles(ctx *gin.Context) {
 		return
 	}
 
+	if !strings.HasSuffix(path, "/") {
+		ctx.Redirect(308, path+"/")
+	}
+
 	type fileListing struct {
 		Path  string `json:"path"`
 		Name  string `json:"name"`
@@ -103,7 +107,7 @@ func handleListFiles(ctx *gin.Context) {
 			slashIfDir = "/"
 		}
 		fileListings = append(fileListings, fileListing{
-			Path:  strings.ReplaceAll(filepath.Join(path, f.Name()), "\\", "/"),
+			Path:  strings.ReplaceAll(filepath.Join(path, f.Name()), "\\", "/") + slashIfDir,
 			Name:  f.Name() + slashIfDir,
 			IsDir: f.IsDir(),
 			Size:  HumanFileSize(info.Size()),
