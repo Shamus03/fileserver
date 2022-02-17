@@ -14,8 +14,6 @@ import (
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
-
 	g := gin.Default()
 	g.SetTrustedProxies([]string{"127.0.0.1"})
 
