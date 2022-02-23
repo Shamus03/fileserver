@@ -50,8 +50,11 @@ func handleListFiles(ctx *gin.Context) {
 	if _, ok := ctx.GetQuery("zip"); ok {
 		z := zip.NewWriter(ctx.Writer)
 
+		zipName := filepath.Base(realPath) + ".zip"
+
 		ctx.Status(200)
 		ctx.Header("Content-Type", "application/zip")
+		ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", zipName))
 		if err := filepath.Walk(realPath, func(filePath string, info os.FileInfo, err error) error {
 			if info.IsDir() {
 				return nil
